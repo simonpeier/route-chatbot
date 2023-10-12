@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "aifo-miniproject-401806",
+  "private_key_id": "0b78e72e0f2f4a8fd6dc5d8515f26b87c595de2b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCueIAL96z3lLvA\nXjtY7r8I5kYBjUwqZt6wmdrsGq5UvJZuh9UjmGTz72RdyHCcWexISRkprp21F/Jg\nkULgMx1iN9/RR7tnq5Yodc6pEFfo2310YD9WfMZdG7C6owrPUj20vCjP4D7g7ifN\nLVura6137CLqQj34EOl9SCgWH6YSeD0zXxb7WOuBkeEaTvp+/+DSbQBCcvxrDLzr\nmpW861OnfdHSOIcz/GjNDeU/mONlnQ8WU8QvM95u4MrPADba5eGA7aoQLD5qRNL3\nrNMpWzPGMUaH1drgk5Zb73RF7Fjs35yxdJq8gm54ruSM1/vd7MuAhqa/NCg7/OOi\nn819B0y1AgMBAAECggEAVJYkUmkGaVQpQKcO89twL+LgjvEPu8D69zjojC6VVYzH\nDBh7y9GfJCrsiJFck1j/dr5F3lEDseBFyO60MxllBhDbyM2TvLvSRZR0GMBNNp5v\ncOQW4RoGW+7IXHweigwv0Xel+76XDZs5Hb7/YhkG1YzdEqECBUpBwVUh5jP64pms\nnFRyiAi9Ar5oKYcZieMZh+3uUPuhdOOzO3389zLcymIKdhcQebbBAekV5WvMSZrF\nDWtKDcAvJy93/utrjYGHpearvayTTKQcWjMJa05oj7CcGhBcewFYjiaHrUV7qsIk\nDeWDt9BtDrfv20IRA3W48u4qesf+oYMhAS86r0goswKBgQD19u1e/TLmxNUv4Pbk\nzeoRZ5kUpKQfCpDG6AP4gLYRddqw/zqdprJaNFOv4y7JI7X6oT4HpQ/dLnsGCQLN\nZKjjwFzY6YVaYErvjeafzCvhAUz+XXvsKxtNeCA3vfDNxV1G7sZDzHhqMfdY8Xo0\nRHzzrYbRDtibQ5+NtUjXpaC1KwKBgQC1ltPWnRhsAiQXyVZR2HqatDYnWhjjog0S\nNUIVj7ZkhuXm7/oPfobm4+YRhO17mm3Fo1FCDFxGpM2hXiCeC/H6ontx0DvURg3Y\nfD/4Nu99EVXfHtqt7GJJ3mw2gpllujy6Uef+qYXZqVS9y+05jsmhnowTeop4stm5\nVQs5rW7VnwKBgQCGg3lDZpNs0x6H5a8AaIBm7lIwkO3UsBGHRiHNyI5JtDtaauqi\nhySo4k8WNNdEVwxRudbTlXi8jIvpPApVS4R1saDVW7h7OYghxGfo4l7o2a5Cudto\nyBZRYq2z7mOAFTyy6yhwsaT05siP0tfzN7ViCnddY5IgL3ZVqFvi24itKwKBgHbL\nd0Z9e06dj/MnuhrNHlg68PqJjKLOjvKMePEWFWJqhdiwwcyFH8fI6+gmKB6mho23\nLB+janKkugmJRJlggytORKfObHWQZtprXoYJml8diinvS2xgqmRc6Do48hWE4tmZ\nX8ZQLMqaZl/MGyN+cBYVXNoZXqFbj+gY5MEU3t9NAoGAQVZMJ4XnG/T8KbGM8sFD\n3iKMcax+pVuR+QFCbCdHCmeniv0qWEg7dV5wyzSO449uDi840hFSXNSWi+mdGODx\nrgYQIdXtP/jUHTz+Rd+QehHdkKX3TXKCz/MIMmnfqMlq/zUydE2rluIFSb7YnRop\n+7n4wgHpcMLzD4urjCNp46k=\n-----END PRIVATE KEY-----\n",
+  "client_email": "service-acc-routeagent@aifo-miniproject-401806.iam.gserviceaccount.com",
+  "client_id": "115461306792843925454",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-acc-routeagent%40aifo-miniproject-401806.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

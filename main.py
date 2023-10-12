@@ -1,8 +1,9 @@
 import os
+
 from google.cloud import dialogflow
 
 # path to the key-file
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="C:\\Users\\rm\Desktop\\coffee-shop-oorx-d781e69c3a37.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "aifo-miniproject-401806-0b78e72e0f2f.json"
 
 
 # example from  https://cloud.google.com/dialogflow/es/docs/quick/api#detect-intent-text-python
@@ -35,11 +36,15 @@ def detect_intent_demo(project_id, session_id, texts, language_code):
         print(
             "Detected intent: {} (confidence: {})\n".format(
                 response.query_result.intent.display_name,
-                response.query_result.intent_detection_confidence,
+                response.query_result.intent_detection_confidence
             )
         )
         print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
+        print(f"Origin: {response.query_result.parameters['origin']['city']}")
+        print(f"Destination: {response.query_result.parameters['destination']['city']}")
+        print(f"Travelmode: {response.query_result.parameters['travelmode']}")
+
 
 if __name__ == "__main__":
     # change the values accordingly
-    detect_intent_demo('coffee-shop-oorx', 'no-session-ID', ['I want a rivella', 'delivery'], 'en')
+    detect_intent_demo('aifo-miniproject-401806', 'no-session-ID', ['I want to go from Genf to Tokyo by car'], 'en')
