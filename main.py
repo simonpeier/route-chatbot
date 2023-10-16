@@ -9,15 +9,10 @@ api_key = "AIzaSyCEnDQGxcTkbQVazIXFO-E081PYAvciANY"
 api_url = 'https://maps.googleapis.com/maps/api/directions/json?'
 
 
-# example from  https://cloud.google.com/dialogflow/es/docs/quick/api#detect-intent-text-python
-def detect_intent(project_id, session_id, texts, language_code):
-    """
-    https://cloud.google.com/dialogflow/es/docs/quick/api#detect-intent-text-python
-
-    Returns the result of detect intent with texts as inputs.
-
-    Using the same `session_id` between requests allows continuation
-    of the conversation."""
+def detect_intent(texts):
+    project_id = 'aifo-miniproject-401806'
+    session_id = 'no-session-ID'
+    language_code = 'en'
 
     session_client = dialogflow.SessionsClient()
 
@@ -25,37 +20,42 @@ def detect_intent(project_id, session_id, texts, language_code):
     print("Session path: {}\n".format(session))
 
     for text in texts:
-        text_input = dialogflow.TextInput(text=text, language_code=language_code)
+        while True:
+            text_input = dialogflow.TextInput(text=text, language_code=language_code)
 
-        query_input = dialogflow.QueryInput(text=text_input)
+            query_input = dialogflow.QueryInput(text=text_input)
 
-        response = session_client.detect_intent(
-            request={"session": session, "query_input": query_input}
-        )
-
-        print("=" * 20)
-        print("Query text: {}".format(response.query_result.query_text))
-        print(
-            "Detected intent: {} (confidence: {})\n".format(
-                response.query_result.intent.display_name,
-                response.query_result.intent_detection_confidence
+            response = session_client.detect_intent(
+                request={"session": session, "query_input": query_input}
             )
-        )
 
-        origin = response.query_result.parameters['origin']['city']
-        destination = response.query_result.parameters['destination']['city']
-        travelmode = response.query_result.parameters['travelmode']
+            if response.query_result.intent.display_name == "Default Fallback Intent":
+                text = input(response.query_result.fulfillment_text + "\n")
+            else:
+                print("=" * 20)
+                print("Query text: {}".format(response.query_result.query_text))
+                print(
+                    "Detected intent: {} (confidence: {})\n".format(
+                        response.query_result.intent.display_name,
+                        response.query_result.intent_detection_confidence
+                    )
+                )
 
-        print_dialogflow_query_parameters(destination, origin, response, travelmode)
+                origin = response.query_result.parameters['origin']['city']
+                destination = response.query_result.parameters['destination']['city']
+                travelmode = response.query_result.parameters['travelmode'][0]
 
-        fetch_route(destination, origin, travelmode)
+                print_dialogflow_query_parameters(destination, origin, response, travelmode)
+
+                fetch_route(destination, origin, travelmode)
+                break
 
 
 def fetch_route(destination, origin, travelmode):
     params = {
         'origin': origin,
         'destination': destination,
-        'mode': travelmode.lower(),
+        'mode': travelmode,
         'key': api_key
     }
     response = requests.get(api_url, params=params)
@@ -82,5 +82,11 @@ def print_dialogflow_query_parameters(destination, origin, response, travelmode)
 
 
 if __name__ == "__main__":
-    # change the values accordingly
-    detect_intent('aifo-miniproject-401806', 'no-session-ID', ['I want to go from Geneva to Zürich by transit'], 'en')
+    while True:
+        user_input = input("How can I help you? \n")
+        detect_intent([user_input])
+        another_route = input("Do you need something else? (y/n)")
+        if another_route.lower() == "y":
+            continue
+        else:
+            break
