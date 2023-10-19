@@ -6,7 +6,8 @@ from google.cloud import dialogflow
 # path to the key-file
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "aifo-miniproject-401806-0b78e72e0f2f.json"
 api_key = "AIzaSyCEnDQGxcTkbQVazIXFO-E081PYAvciANY"
-api_url = 'https://maps.googleapis.com/maps/api/directions/json?'
+directions_url = 'https://maps.googleapis.com/maps/api/directions/json?'
+places_url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
 
 
 def detect_intent(texts):
@@ -41,14 +42,20 @@ def detect_intent(texts):
                     )
                 )
 
-                origin = response.query_result.parameters['origin']['city']
-                destination = response.query_result.parameters['destination']['city']
-                travelmode = response.query_result.parameters['travelmode'][0]
-
-                print_dialogflow_query_parameters(destination, origin, response, travelmode)
-
-                fetch_route(destination, origin, travelmode)
-                break
+                if response.query_result.intent.display_name == "request.route":
+                    origin = response.query_result.parameters['origin']['city']
+                    destination = response.query_result.parameters['destination']['city']
+                    travelmode = response.query_result.parameters['travelmode'][0]
+                    print_dialogflow_query_parameters(destination, origin, response, travelmode)
+                    fetch_route(destination, origin, travelmode)
+                    break
+                elif response.query_result.intent.display_name == "find.place":
+                    location = response.query_result.parameters['location']['city']
+                    type = response.query_result.parameters['placetype']
+                    print(f"Location: {location}")
+                    print(f"Type: {type}")
+                    fetch_places(location, type)
+                    break
 
 
 def fetch_route(destination, origin, travelmode):
@@ -58,7 +65,7 @@ def fetch_route(destination, origin, travelmode):
         'mode': travelmode,
         'key': api_key
     }
-    response = requests.get(api_url, params=params)
+    response = requests.get(directions_url, params=params)
     print(f"Directions api url: {response.url}\n")
 
     if response.status_code == 200:
@@ -70,6 +77,36 @@ def fetch_route(destination, origin, travelmode):
             duration = routes[0]['legs'][0]['duration']['text']
             print(f"Distance: {distance}")
             print(f"Duration: {duration}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+
+def fetch_places(location, type):
+    params = {
+        'query': location,
+        'type': type,
+        'key': api_key
+    }
+    response = requests.get(places_url, params=params)
+    print(f"Directions api url: {response.url}\n")
+
+    if response.status_code == 200:
+        results = response.json()['results']
+        if not results:
+            print(f"Looks like there is no {type} in {location}")
+        else:
+            if len(results) == 1 or len(results) == 2:
+                name = results[0]['name']
+                address = results[0]['formatted_address']
+                print(f"Name: {name}")
+                print(f"Address: {address}\n")
+            else:
+                for id_entries in range(3):
+                    name = results[id_entries]['name']
+                    address = results[id_entries]['formatted_address']
+                    print(f"Name: {name}")
+                    print(f"Address: {address}\n")
+                    print("=" * 20)
     else:
         print(f"Request failed with status code {response.status_code}")
 
