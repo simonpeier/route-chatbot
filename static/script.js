@@ -18,14 +18,16 @@ function getBotResponse() {
 
     // Call api to generate bot message
     $.get("/get", {msg: rawText}).done(function (data) {
-        // Add bot message to conversation
-        let botMessage = document.createElement('div')
-        botMessage.classList.add('chatbot-message', 'bot-message')
-        botMessage.innerHTML = '<p class="chatbot-text bot-message-color">' + data + "</p>";
-        $("#chatbox").append(botMessage);
-        document
-            .getElementById("userInput")
-            .scrollIntoView({block: "start", behavior: "smooth"});
+        // Add bot messages to conversation
+        for (let i = 0; i < data.length; i++) {
+            let botMessage = document.createElement('div')
+            botMessage.classList.add('chatbot-message', 'bot-message')
+            botMessage.innerHTML = '<p class="chatbot-text bot-message-color">' + data[i] + "</p>";
+            $("#chatbox").append(botMessage);
+            document
+                .getElementById("userInput")
+                .scrollIntoView({block: "start", behavior: "smooth"});
+        }
     });
 }
 
