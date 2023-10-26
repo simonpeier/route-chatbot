@@ -1,4 +1,5 @@
 import os
+import re
 
 import requests
 from flask import Flask, render_template, request
@@ -27,24 +28,31 @@ def detect_intent(text):
         request={"session": session, "query_input": query_input}
     )
 
+    fulfillment_text = re.sub(r'\s+', ' ', response.query_result.fulfillment_text)
     print(f"INTENT: {response.query_result.intent.display_name}")
-    print(f"PARAMETERS: {response.query_result.fulfillment_text}\n")
+    print(f"PARAMETERS: {fulfillment_text}\n")
 
-    if response.query_result.fulfillment_text != "completed":
-        return [response.query_result.fulfillment_text]
+    if not fulfillment_text.startswith("#"):
+        return [fulfillment_text]
     else:
+        dialogflow_text = fulfillment_text[1:]
         question_text = "Do you need something else?"
-        if response.query_result.intent.display_name == "request.route":
-            origin = response.query_result.parameters['origin']['city']
-            destination = response.query_result.parameters['destination']['city']
-            travelmode = response.query_result.parameters['travelmode']
-            print_route_parameters(destination, origin, travelmode)
-            return [fetch_route(destination, origin, travelmode), question_text]
-        elif response.query_result.intent.display_name == "find.place":
-            location = response.query_result.parameters['location']['city']
-            placetype = response.query_result.parameters['placetype']
-            print_place_parameters(location, placetype)
-            return [fetch_places(location, placetype), question_text]
+        print("test")
+        if response.query_result.intent.display_name == "request.route - yes":
+            for context in response.query_result.output_contexts:
+                if context.name.endswith("requestroute-followup"):
+                    origin = context.parameters.get("origin")["city"]
+                    destination = context.parameters.get("destination")["city"]
+                    travelmode = context.parameters.get("travelmode")
+                    message = f"{dialogflow_text}\n\n{fetch_route(destination, origin, travelmode)}"
+                    return [message, question_text]
+        elif response.query_result.intent.display_name == "find.place - yes":
+            for context in response.query_result.output_contexts:
+                if context.name.endswith("findplace-followup"):
+                    city = context.parameters.get("location")["city"]
+                    placetype = context.parameters.get("placetype")
+                    message = f"{dialogflow_text}\n\n{fetch_places(city, placetype)}"
+                    return [message, question_text]
 
 
 def fetch_route(destination, origin, travelmode):
@@ -68,18 +76,19 @@ def fetch_route(destination, origin, travelmode):
         return f"Request failed with status code {response.status_code}"
 
 
-def fetch_places(location, placetype):
+def fetch_places(city, placetype):
     params = {
-        'query': location,
+        'query': city,
         'type': placetype,
         'key': api_key
     }
     response = requests.get(places_url, params=params)
+    print(f"Directions api url: {response.url}\n")
 
     if response.status_code == 200:
         results = response.json()['results']
         if not results:
-            return f"Looks like there is no {placetype} in {location}"
+            return f"Looks like there is no {placetype} in {city}"
         else:
             if len(results) < 3:
                 name = results[0]['name']
