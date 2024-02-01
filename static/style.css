@@ -16,6 +16,18 @@ h3 {
     text-align: center;
 }
 
+nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid black;
+    z-index: 2;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
 #chatbox {
     margin-left: auto;
     margin-right: auto;
@@ -77,12 +89,4 @@ h3 {
     margin-right: auto;
     width: 78%;
     margin-top: 60px;
-}
-
-.box {
-    border: 2px solid black;
-}
-
-textarea:focus, input:focus {
-    outline: none;
 }
