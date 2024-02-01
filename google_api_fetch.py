@@ -1,6 +1,17 @@
+import configparser
+
 import requests
 
-api_key = "AIzaSyCEnDQGxcTkbQVazIXFO-E081PYAvciANY"
+
+# parses the api key from the private config.ini file. For the chatbot to work, you need to create your own
+# config.ini file. It should contain an api key from the Google directions api.
+def fetch_api_key():
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    return config.get('API_KEYS', 'API_GOOGLE_DIRECTIONS')
+
+
+api_key = fetch_api_key()
 directions_url = 'https://maps.googleapis.com/maps/api/directions/json?'
 places_url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
 
