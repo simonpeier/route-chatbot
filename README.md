@@ -15,7 +15,7 @@ pip install google-cloud-dialogflow
 
 Furthermore, you need to create your own API keys for the API's used.
 
-1. Create a key-file for the dialogflow api according to <insert-link>. Then in the `dialogflow.py` file, replace the
+1. Create a key-file for the dialogflow api according to https://cloud.google.com/dialogflow/es/docs/quick/setup. Then in the `dialogflow.py` file, replace the
    content of the `GOOGLE_APPLICATION_CREDENTIALS` variable with the path to your own key-file.
 2. Create a config.ini file with the following content:
    ```
