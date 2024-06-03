@@ -23,3 +23,6 @@ Furthermore, you need to create your own API keys for the API's used.
    API_GOOGLE_DIRECTIONS = <YOUR_API_KEY>
    ```
    Replace `<YOUR_API_KEY>` with your own google directions api key.
+
+## Screenshots
+![Screenshots](https://github.com/simonpeier/route-chatbot/assets/41295530/7cf8b145-ecc1-4128-8030-2a6686d167b8)
